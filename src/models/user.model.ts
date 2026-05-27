@@ -1,11 +1,10 @@
 import { sequelize } from "../config/db";
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 
 export interface UserInterface {
   id: number;
   email: string;
   password: string;
-
   createdAt: Date;
   updatedAt: Date;
 }
