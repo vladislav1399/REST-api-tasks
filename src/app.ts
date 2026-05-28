@@ -3,6 +3,7 @@ import { sequelize } from "./config/db";
 
 import userRoute from "./routes/user.route";
 import authRoute from "./routes/auth.route";
+import taskRoute from "./routes/task.route";
 
 const app = express();
 
@@ -24,4 +25,5 @@ app.use(express.json());
 
 app.use("/users", userRoute);
 app.use("/auth", authRoute);
+app.use("/tasks", taskRoute);
 export default app;

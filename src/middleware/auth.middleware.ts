@@ -10,16 +10,13 @@ export const authMiddleware = (
 ) => {
   try {
     const authHeader = req.headers.authorization;
-
     if (!authHeader) {
       return res.status(401).json({ message: "No token" });
     }
 
     const token: string = authHeader.split(" ")[1];
-
     const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
-
-    req.user = decoded; // ✔ теперь типизировано
+    req.user = decoded;
 
     next();
   } catch {
