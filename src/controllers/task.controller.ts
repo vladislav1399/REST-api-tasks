@@ -43,3 +43,65 @@ export const getMyTasks = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const updateTask = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const { title, description, completed } = req.body;
+
+    const task = await Task.findOne({
+      where: {
+        id,
+        userId: req.user!.id,
+      },
+    });
+
+    if (!task) {
+      return res.status(404).json({
+        message: "Task not found",
+      });
+    }
+
+    await task.update({
+      title,
+      description,
+      completed,
+    });
+
+    return res.json(task);
+  } catch (err) {
+    return res.status(500).json({
+      message: "Failed to update task",
+    });
+  }
+};
+
+export const deleteTask = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const task = await Task.findOne({
+      where: {
+        id,
+        userId: req.user!.id,
+      },
+    });
+
+    if (!task) {
+      return res.status(404).json({
+        message: "Task not found",
+      });
+    }
+
+    await task.destroy();
+
+    return res.json({
+      message: "Task deleted",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Failed to delete task",
+    });
+  }
+};
